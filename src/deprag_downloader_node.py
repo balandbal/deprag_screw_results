@@ -20,7 +20,7 @@ def callback_download(data): #if data is -1 publishe curve to topic
     global downloadDirectory
     backupDownload = downloadDirectory
     pub = False
-    if(data.iTarget == -1):
+    if(data.iTarget < 0):
         pub = True
         data.iTarget = 1 
         downloadDirectory = "/tmp/deprag_downloaderERmabs4k23lknad33"
