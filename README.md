@@ -22,6 +22,9 @@ Now a curve can be saved by calling the "/deprag_download" service.
 The number with which the service is called determines what curve is downloaded.
 Notice that 0 will download all files available, therefore passing 1 will download the latest curve.
 
+When calling with a value < 0 it will download the last curve and the corresponding programm parameters and publish both under /deprag/curves
+no files will be saved on the harddrive for later use therefore if you need the curve published and saved call the service with 1 as value as well.
+
 ## Acknowledgement
 Sponsored by the Ministry of the Environment Baden-Württemberg, in the context of the Strategic Dialogue Automotive Industry, and supervised by the Project Management Agency Karlsruhe (PTKA). Funding number: L7520101
 
