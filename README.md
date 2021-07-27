@@ -30,13 +30,21 @@ The json contains all program information in accordance with the used deprag man
 structure called "csv" where it is separated into different arrays.
 
 "Zeit(0.001 ms)" represents the time passed since starting the programm in 0.001 ms
+
 "Drehmoment Messsystem 1 (Nm)" is the torque messured by system 1 in Nm
+
 "Winkel Messsystem 1" is the angle messured by system 1 
+
 "Drehmoment Motor (Nm)" is the torque messured by the motor in Nm
+
 "Winkel Motor" is the angle messured by the motor
+
 "Drehzahl (U/min)" represents rpm
+
 "Schritt" represents the steps taken
+
 "Stromstaerke (A)" represents the amperage drawn in amps
+
 "Temperatur (C)" represents the motor temperature in Celcius
 
 
