@@ -9,10 +9,18 @@ import os
 from deprag_downloader.msg import screwing
 import csv
 import shutil
+import time
 
 downloadDirectory = "/home/adm-awi/Downloads/TestFolder"
 
 depragIP = "172.10.25.100" #ip address of the deprag screwdriver
+
+def find_nth(haystack, needle, n):
+    start = haystack.find(needle)
+    while start >= 0 and n > 1:
+        start = haystack.find(needle, start+len(needle))
+        n -= 1
+    return start
 
 def callback_download(data): #if data is -1 publishe curve to topic
     #copy past download part with data.iTarget as Index
@@ -102,10 +110,102 @@ def callback_download(data): #if data is -1 publishe curve to topic
         c = _csv_str.find("Temperatur")
         c = c+15
         _csv_str = _csv_str[c:]
-        print(_csv_str)
         msg.csv = _csv_str
         _csv.close()
         publer.publish(msg)
+
+        filepath = backupDownload + "/" + str(time.time()) +".json"
+        _f = open(filepath, "w")
+        jsonInfo = prgmInfo.replace("\n",",\n\"")
+        jsonInfo = jsonInfo.replace("=","\":")
+        jsonInfo = "\"" + jsonInfo
+        c = find_nth(jsonInfo,":",2) + 1
+        jsonInfo = jsonInfo[:c] + "\"" + jsonInfo[c:]
+        c = find_nth(jsonInfo,",",2)
+        jsonInfo = jsonInfo[:c] + "\"" + jsonInfo[c:]
+        _f.write("{ \n")
+        _f.write(jsonInfo)
+
+
+        zeit = "["
+        Dmess1 = "["
+        Wmess1 = "["
+        Dmotor = "["
+        Wmotor = "["
+        DZ = "["
+        Schritt = "["
+        Strom = "["
+        Temp = "["
+        lines = _csv_str.count("\n") + 1 #anzahl Zeilen
+        for i in range(0,lines):
+            #Zeit
+            c = _csv_str.find(",")
+            zeit = zeit + _csv_str[:c] + ","
+            _csv_str = _csv_str[c+1:]
+            #Mess1 Dreh
+            c = _csv_str.find(",")
+            Dmess1 = Dmess1 + _csv_str[:c] + ","
+            _csv_str = _csv_str[c+1:]
+            #W mess1
+            c = _csv_str.find(",")
+            Wmess1 = Wmess1 + _csv_str[:c] + ","
+            _csv_str = _csv_str[c+1:]
+            #D motor
+            c = _csv_str.find(",")
+            Dmotor = Dmotor + _csv_str[:c] + ","
+            _csv_str = _csv_str[c+1:]
+            #W Motor
+            c = _csv_str.find(",")
+            Wmotor = Wmotor + _csv_str[:c] + ","
+            _csv_str = _csv_str[c+1:]
+            #Drehzahl
+            c = _csv_str.find(",")
+            DZ = DZ + _csv_str[:c] + ","
+            _csv_str = _csv_str[c+1:]
+            #Schritt
+            c = _csv_str.find(",")
+            Schritt = Schritt + _csv_str[:c] + ","
+            _csv_str = _csv_str[c+1:]
+            #Strom
+            c = _csv_str.find(",")
+            Strom = Strom + _csv_str[:c] + ","
+            _csv_str = _csv_str[c+1:]
+            #temp
+            c = _csv_str.find("\n")
+            Temp = Temp + _csv_str[:c] + ","
+            _csv_str = _csv_str[c+1:]
+
+        zeit = zeit.replace("\n","")
+
+        zeit = zeit[:(len(zeit) - 2)] + "],"
+        Dmess1 = Dmess1[:(len(zeit) - 2)] + "],"
+        Wmess1 = Wmess1[:(len(zeit) - 2)] + "],"
+        Dmotor = Dmotor[:(len(zeit) - 2)] + "],"
+        Wmotor = Wmotor[:(len(zeit) - 2)] + "],"
+        DZ = DZ[:(len(zeit) - 2)] + "],"
+        Schritt = Schritt[:(len(zeit) - 2)] + "],"
+        Strom = Strom[:(len(zeit) - 2)] + "],"
+        Temp = Temp[:(len(zeit) - 2)] + "]"
+
+        _f.write("csv\" : { \n")
+        t = "   \"Zeit(0.001 ms)\":" + zeit
+        t.replace("\n","")
+        _f.write(t + "\n")
+        _f.write("  \"Drehmoment Messsystem 1 (Nm)\":" + Dmess1 + "\n")
+        _f.write("  \"Winkel Messsystem 1\":" + Wmess1 + "\n")
+        _f.write("  \"Drehmoment Motor (Nm)\":" + Dmotor + "\n")
+        _f.write("  \"Winkel Motor\":" + Wmotor + "\n")
+        _f.write("  \"Drehzahl (U/min)\":" + DZ + "\n")
+        _f.write("  \"Schritt\":" + Schritt + "\n")
+        _f.write("  \"Stromstaerke (A)\":" + Strom + "\n")
+        _f.write("  \"Temperatur (C)\":" + Temp + "\n")
+        
+
+    
+
+        _f.write("}\n")
+        _f.write("  }")
+        _f.close()
 
         shutil.rmtree(downloadDirectory, ignore_errors=True)
 
