@@ -15,8 +15,9 @@ Furthermore, change the "depragIP" variable to the address matching your deprag 
 
 ## Usage
 After making sure roscore is running start the deprag_downloader_node using
+```
 $ rosrun deprag_downloader deprag_downloader_node.py 
-
+```
 Now a curve can be saved by calling the "/deprag_download" service.
 
 The number with which the service is called determines what curve is downloaded.
