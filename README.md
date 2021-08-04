@@ -19,6 +19,9 @@ After making sure roscore is running start the deprag_downloader_node using
 $ rosrun deprag_downloader deprag_downloader_node.py 
 ```
 Now a curve can be saved by calling the "/deprag_download" service.
+```
+$ rosservice call /deprag_download
+```
 
 The number with which the service is called determines what curve is downloaded.
 Notice that 0 will download all files available, therefore passing 1 will download the latest curve.
