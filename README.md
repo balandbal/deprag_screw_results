@@ -27,6 +27,9 @@ The number with which the service is called determines what curve is downloaded.
 Notice that 0 will download all files available, therefore passing 1 will download the latest curve.
 
 When calling with a value < 0 it will download the last curve and the corresponding programm parameters and publish both under /deprag/curves.
+```
+$ rostopic echo /deprag/curves
+```
 A json file containing the program parameters and the curve values is saved in the download directory the files name is determined by the current system time.
 
 ## json
