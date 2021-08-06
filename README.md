@@ -20,7 +20,7 @@ $ rosrun deprag_downloader deprag_downloader_node.py
 ```
 Now a curve can be saved by calling the "/deprag_download" service.
 ```
-$ rosservice call /deprag_download
+$ rosservice call /deprag_download arg
 ```
 
 The number with which the service is called determines what curve is downloaded.
