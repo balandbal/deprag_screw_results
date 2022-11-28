@@ -114,10 +114,10 @@ def callback_download(data):  # if data is -1 publishe curve to topic
 
         with open(downloadDirectory + "/data.txt", "r") as _csv:
             _csv_str = _csv.read()
-            c = _csv_str.find("Temperatur")
-            c = c + 15
-            _csv_str = _csv_str[c:]
-            msg.csv = _csv_str
+        c = _csv_str.find("Temperatur")
+        c = c + 15
+        _csv_str = _csv_str[c:]
+        msg.csv = _csv_str
         publer.publish(msg)
 
         filepath = backupDownload + "/" + str(time.time()) + ".json"
