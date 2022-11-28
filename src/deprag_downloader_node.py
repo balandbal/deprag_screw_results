@@ -3,11 +3,9 @@ import rospy
 from deprag_downloader.srv import download_request
 from selenium.webdriver import Firefox, FirefoxProfile
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support.select import Select
 import requests as requester
 import os
 from deprag_downloader.msg import screwing
-import csv
 import shutil
 import time
 
