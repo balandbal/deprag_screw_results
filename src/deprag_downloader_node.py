@@ -5,7 +5,7 @@ import time
 
 import requests as requester
 import rospy
-from selenium.webdriver import Firefox, FirefoxProfile
+from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
 
 from deprag_downloader.msg import screwing
@@ -38,13 +38,12 @@ def callback_download(data):  # if data is -1 publishe curve to topic
 
     opts = Options()
     opts.add_argument("--headless")
-    fxProfile = FirefoxProfile()
 
-    fxProfile.set_preference("browser.download.folderList", 2)
-    fxProfile.set_preference("browser.download.manager.showWhenStarting", False)
-    fxProfile.set_preference("browser.download.dir", downloadDirectory)
-    fxProfile.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv/ast")
-    browser = Firefox(options=opts,firefox_profile=fxProfile)
+    opts.set_preference("browser.download.folderList", 2)
+    opts.set_preference("browser.download.manager.showWhenStarting", False)
+    opts.set_preference("browser.download.dir", downloadDirectory)
+    opts.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv/ast")
+    browser = Firefox(options=opts)
 
     # interact with duck duck
     browser.get(
@@ -68,15 +67,14 @@ def callback_download(data):  # if data is -1 publishe curve to topic
 
         opts = Options()
         opts.add_argument("--headless")
-        fxProfile = FirefoxProfile()
 
-        fxProfile.set_preference("browser.download.folderList", 2)
-        fxProfile.set_preference("browser.download.manager.showWhenStarting", False)
-        fxProfile.set_preference("browser.download.dir", downloadDirectory + subDir)
-        fxProfile.set_preference(
+        opts.set_preference("browser.download.folderList", 2)
+        opts.set_preference("browser.download.manager.showWhenStarting", False)
+        opts.set_preference("browser.download.dir", downloadDirectory + subDir)
+        opts.set_preference(
             "browser.helperApps.neverAsk.saveToDisk", "text/csv/ast"
         )
-        browser = Firefox(options=opts, firefox_profile=fxProfile)
+        browser = Firefox(options=opts)
 
         # interact with duck duck
         browser.get(
