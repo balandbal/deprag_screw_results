@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-import rospy
-from deprag_downloader.srv import download_request
-from selenium.webdriver import Firefox, FirefoxProfile
-from selenium.webdriver.firefox.options import Options
-import requests as requester
 import os
-from deprag_downloader.msg import screwing
 import shutil
 import time
+
+import requests as requester
+import rospy
+from selenium.webdriver import Firefox, FirefoxProfile
+from selenium.webdriver.firefox.options import Options
+
+from deprag_downloader.msg import screwing
+from deprag_downloader.srv import download_request
 
 downloadDirectory = "/home/adm-awi/Downloads/TestFolder"
 
