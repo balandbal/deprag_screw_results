@@ -3,6 +3,7 @@
 <pitasc>
     <models>
         <include package="pitasc_library" file="models/pitasc.xml" />
+        <include package="pitasc_library" file="models/skills.xml" />
 
         <!-- pitasc script model to call the service -->
         <type id="script_download_curve" prototype="script_service_caller">
