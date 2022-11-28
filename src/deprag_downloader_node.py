@@ -24,6 +24,19 @@ def find_nth(haystack, needle, n):
     return start
 
 
+def _get_browser_options(download_directory: str) -> Options:
+    opts = Options()
+
+    opts.add_argument("--headless")
+
+    opts.set_preference("browser.download.folderList", 2)
+    opts.set_preference("browser.download.manager.showWhenStarting", False)
+    opts.set_preference("browser.download.dir", download_directory)
+    opts.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv/ast")
+
+    return opts
+
+
 def callback_download(data):  # if data is -1 publishe curve to topic
     # copy past download part with data.iTarget as Index
     # set up headles browse
@@ -36,28 +49,22 @@ def callback_download(data):  # if data is -1 publishe curve to topic
         downloadDirectory = "/tmp/deprag_downloaderERmabs4k23lknad33"
         os.mkdir(downloadDirectory)
 
-    opts = Options()
-    opts.add_argument("--headless")
+    opts = _get_browser_options(download_directory=downloadDirectory)
 
-    opts.set_preference("browser.download.folderList", 2)
-    opts.set_preference("browser.download.manager.showWhenStarting", False)
-    opts.set_preference("browser.download.dir", downloadDirectory)
-    opts.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv/ast")
-    browser = Firefox(options=opts)
+    with Firefox(options=opts) as browser:
+        # interact with duck duck
+        browser.get(
+            "http://"
+            + depragIP
+            + "/cgi-bin/cgiread?site=-&request=curves&args=&mode=-1-"
+        )
 
-    # interact with duck duck
-    browser.get(
-        "http://" + depragIP + "/cgi-bin/cgiread?site=-&request=curves&args=&mode=-1-"
-    )
-
-    dropdown = browser.find_element_by_class_name("dd-selected")
-    dropdown.click()
-    choice = browser.find_elements_by_class_name("dd-option")
-    choice[1].click()
-    downloads = browser.find_elements_by_class_name("download")
-    downloads[data.iTarget].click()
-
-    browser.close()
+        dropdown = browser.find_element_by_class_name("dd-selected")
+        dropdown.click()
+        choice = browser.find_elements_by_class_name("dd-option")
+        choice[1].click()
+        downloads = browser.find_elements_by_class_name("download")
+        downloads[data.iTarget].click()
 
     if pub:
         _kurve_name = os.listdir(downloadDirectory)[0]
@@ -65,28 +72,18 @@ def callback_download(data):  # if data is -1 publishe curve to topic
         subDir = "/sub"  # sub directory to determine what program was used
         os.mkdir(downloadDirectory + subDir)
 
-        opts = Options()
-        opts.add_argument("--headless")
+        opts = _get_browser_options(download_directory=downloadDirectory + subDir)
 
-        opts.set_preference("browser.download.folderList", 2)
-        opts.set_preference("browser.download.manager.showWhenStarting", False)
-        opts.set_preference("browser.download.dir", downloadDirectory + subDir)
-        opts.set_preference(
-            "browser.helperApps.neverAsk.saveToDisk", "text/csv/ast"
-        )
-        browser = Firefox(options=opts)
+        with Firefox(options=opts) as browser:
+            # interact with duck duck
+            browser.get(
+                "http://"
+                + depragIP
+                + "/cgi-bin/cgiread?site=-&request=fvalues&args=&mode=-1-"
+            )
 
-        # interact with duck duck
-        browser.get(
-            "http://"
-            + depragIP
-            + "/cgi-bin/cgiread?site=-&request=fvalues&args=&mode=-1-"
-        )
-
-        downloads = browser.find_elements_by_class_name("download")
-        downloads[len(downloads) - 2].click()
-
-        browser.close()
+            downloads = browser.find_elements_by_class_name("download")
+            downloads[len(downloads) - 2].click()
 
         info = open(downloadDirectory + subDir + "/actual.csv", "r")
         _info = info.read()
