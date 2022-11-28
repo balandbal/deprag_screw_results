@@ -67,7 +67,7 @@ def callback_download(data):  # if data is -1 publishe curve to topic
         os.mkdir(downloadDirectory + subDir)
 
         opts = Options()
-        opts.set_headless()
+        opts.add_argument("--headless")
         fxProfile = FirefoxProfile()
 
         fxProfile.set_preference("browser.download.folderList", 2)
