@@ -6,6 +6,7 @@ import time
 import requests as requester
 import rospy
 from selenium.webdriver import Firefox
+from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 
 from deprag_downloader.msg import screwing
@@ -59,11 +60,11 @@ def callback_download(data):  # if data is -1 publishe curve to topic
             + "/cgi-bin/cgiread?site=-&request=curves&args=&mode=-1-"
         )
 
-        dropdown = browser.find_element_by_class_name("dd-selected")
+        dropdown = browser.find_element(By.CLASS_NAME, "dd-selected")
         dropdown.click()
-        choice = browser.find_elements_by_class_name("dd-option")
+        choice = browser.find_elements(By.CLASS_NAME, "dd-option")
         choice[1].click()
-        downloads = browser.find_elements_by_class_name("download")
+        downloads = browser.find_elements(By.CLASS_NAME, "download")
         downloads[data.iTarget].click()
 
     if pub:
@@ -82,7 +83,7 @@ def callback_download(data):  # if data is -1 publishe curve to topic
                 + "/cgi-bin/cgiread?site=-&request=fvalues&args=&mode=-1-"
             )
 
-            downloads = browser.find_elements_by_class_name("download")
+            downloads = browser.find_elements(By.CLASS_NAME, "download")
             downloads[len(downloads) - 2].click()
 
         info = open(downloadDirectory + subDir + "/actual.csv", "r")
