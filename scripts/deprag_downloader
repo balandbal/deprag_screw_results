@@ -31,4 +31,4 @@ if __name__ == "__main__":
 
     downloader = DepragDownloader(download_directory, deprag_ip, publisher_curves)
 
-    service_download = rospy.Service("download", download_request, downloader)
+    rospy.spin()
