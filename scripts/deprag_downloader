@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     publisher_curves = rospy.Publisher("deprag/curves", screwing, queue_size=10)
 
-    downloader = DepragDownloader(download_directory, deprag_ip, publisher_curves)
+    downloader = DepragDownloader(Path(download_directory), deprag_ip, publisher_curves)
 
     service_download = rospy.Service("deprag/download", download_request, downloader)
 
