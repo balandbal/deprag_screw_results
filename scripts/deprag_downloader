@@ -25,7 +25,7 @@ if __name__ == "__main__":
     download_directory = rospy.get_param(
         "~download_directory", str(Path.home() / "Downloads" / "TestFolder")
     )
-    deprag_ip = _get_param("deprag_ip", "str")
+    deprag_ip = _get_param("deprag_ip", "172.10.25.100")
 
     publisher_curves = rospy.Publisher("curves", screwing, queue_size=10)
 
