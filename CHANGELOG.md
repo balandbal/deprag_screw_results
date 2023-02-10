@@ -1,13 +1,9 @@
-## Upcoming 1.1.0<a name="1.1.0"></a> (2023-02-09)
-
-### Docs
-
-- add changelog template ([aa69d65](https://github.com/balandbal/deprag_screw_results/commit/aa69d65fda211b4b7a64929b33ff6e3e932abd81))
+## Upcoming 1.1.0<a name="1.1.0"></a> (2023-02-10)
 
 ### Features
 
-- refactor rospy node ([0897a8c](https://github.com/balandbal/deprag_screw_results/commit/0897a8ca91adfb5828ff71c6888ecadf250ab2c7))
+- refactor rospy node ([46874b1](https://github.com/balandbal/deprag_screw_results/commit/46874b1ad1d6cca2e69ac35f96d9ebfc0003bcbc))
 
 ### Style
 
-- clean up in CMakeLists.txt ([c6f8b60](https://github.com/balandbal/deprag_screw_results/commit/c6f8b60408fe5ed62cb9fbad009864361236654b))
+- clean up in CMakeLists.txt ([08c6c7e](https://github.com/balandbal/deprag_screw_results/commit/08c6c7ef725a8e41de87cf62990381991e242066))
