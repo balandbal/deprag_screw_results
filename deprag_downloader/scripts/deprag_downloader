@@ -25,7 +25,11 @@ if __name__ == "__main__":
     download_directory = rospy.get_param(
         "~download_directory", str(Path.home() / "Downloads" / "TestFolder")
     )
+    rospy.loginfo(f"Will download into directory '{str(download_directory)}'")
+
     deprag_ip = _get_param("deprag_ip", "172.10.25.100")
+
+    rospy.loginfo(f"Will look for screwdriver @{deprag_ip}")
 
     publisher_curves = rospy.Publisher("deprag/curves", screwing, queue_size=10)
 
